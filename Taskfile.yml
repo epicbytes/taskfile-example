@@ -1,0 +1,27 @@
+version: "3"
+
+includes:
+  frontend: frontend
+  backend: backend
+
+tasks:
+  dev:
+    watch: true
+    # starting all tasks in parallel mode
+    deps:
+      - frontend:js_deps
+      - frontend:yarn_dev
+      - backend:go_dev
+
+  cleanup_dev:
+    cmds:
+      - rm -rf .task
+      - rm -rf backend/dist
+
+  prod:
+    prompt: "Are you really wants to build and deploy?"
+    cmds:
+      - docker build -t example-app:latest .
+      #- docker publish....
+      #- restart remote swarm/k8s service/pod
+      #- send some event

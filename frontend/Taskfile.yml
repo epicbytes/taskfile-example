@@ -1,0 +1,23 @@
+version: "3"
+tasks:
+  js_deps:
+    dir: frontend
+    label: "Install JS dependencies"
+    cmds:
+      - yarn
+    sources:
+      - ./package.json
+
+  yarn_dev:
+    dir: frontend
+    run: once
+    deps:
+      - js_deps
+    cmds:
+      - yarn dev --host=0.0.0.0
+      - defer: { task: cleanup_dev }
+
+  cleanup_dev:
+    dir: frontend
+    cmds:
+      - echo "cleanup frontend"

@@ -1,0 +1,8 @@
+backend/dist
+frontend/dist
+frontend/node_modules
+.task
+.gitignore
+README.md
+.env.local
+Taskfile.yml

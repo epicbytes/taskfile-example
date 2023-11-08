@@ -1,0 +1,34 @@
+version: "3"
+interval: 500ms
+tasks:
+  copy_embed_dist:
+    cmds:
+      - cp -r "$PWD/frontend/dist" "$PWD/backend/dist"
+  go_deps:
+    label: "Go mod tidy"
+    watch: true
+    dir: backend
+    deps:
+      - task: copy_embed_dist
+    cmds:
+      - go mod tidy
+    sources:
+      - ./go.mod
+
+  go_dev:
+    dir: backend
+    generates:
+      - ./main
+    deps:
+      - task: go_deps
+    cmds:
+      - go build ./main.go
+      - defer: { task: cleanup_dev }
+      - ./main
+    sources:
+      - ./main.go
+
+  cleanup_dev:
+    dir: backend
+    cmds:
+      - rm -rf ./main

@@ -1,0 +1,8 @@
+backend/dist
+frontend/node_modules
+.task
+.gitignore
+README.md
+Taskfile.yml
+.idea
+.DS_Store
